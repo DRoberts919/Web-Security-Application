@@ -1,0 +1,125 @@
+{
+  "response_code": 0,
+  "results": [
+    {
+      "category": "Entertainment: Video Games",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "What is the punishment for playing Postal 2 in New Zealand?",
+      "correct_answer": "10 years in prison and a fine of $50,000",
+      "incorrect_answers": [
+        "Fine of $5,000",
+        "Nothing",
+        "15 years in prison and a fine of $10,000"
+      ]
+    },
+    {
+      "category": "Entertainment: Video Games",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "What is Solid Snake&#039;s real name?",
+      "correct_answer": "David",
+      "incorrect_answers": [
+        "Solid Snake",
+        "John",
+        "Huey"
+      ]
+    },
+    {
+      "category": "Entertainment: Film",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Which iconic character is featured in movies such as &quot;The Enforcer&quot;, &quot;Sudden Impact&quot;, and &quot;The Dead Pool&quot;?",
+      "correct_answer": "Dirty Harry",
+      "incorrect_answers": [
+        "Indiana Jones",
+        "James Bond",
+        "Harry Potter"
+      ]
+    },
+    {
+      "category": "Science & Nature",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Which part of the body does glaucoma affect?",
+      "correct_answer": "Eyes",
+      "incorrect_answers": [
+        "Throat",
+        "Stomach",
+        "Blood"
+      ]
+    },
+    {
+      "category": "Entertainment: Video Games",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "The first version of Blockland came out in which year?",
+      "correct_answer": "2004",
+      "incorrect_answers": [
+        "2007",
+        "2008",
+        "2006"
+      ]
+    },
+    {
+      "category": "Sports",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "What is the oldest team in the NFL?",
+      "correct_answer": "Arizona Cardinals",
+      "incorrect_answers": [
+        "Chicago Bears",
+        "Green Bay Packers",
+        "New York Giants"
+      ]
+    },
+    {
+      "category": "Art",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Which artist&#039;s style was to use small different colored dots to create a picture?",
+      "correct_answer": "Georges Seurat",
+      "incorrect_answers": [
+        "Paul C&eacute;zanne",
+        "Vincent Van Gogh",
+        "Henri Rousseau"
+      ]
+    },
+    {
+      "category": "Sports",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Which of the following pitchers was named National League Rookie of the Year for the 2013 season?",
+      "correct_answer": "Jose Fernandez",
+      "incorrect_answers": [
+        "Jacob deGrom",
+        "Shelby Miller",
+        "Matt Harvey"
+      ]
+    },
+    {
+      "category": "Geography",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "The Pyrenees mountains are located on the border of which two countries?",
+      "correct_answer": "France and Spain",
+      "incorrect_answers": [
+        "Italy and Switzerland",
+        "Norway and Sweden",
+        "Russia and Ukraine"
+      ]
+    },
+    {
+      "category": "Entertainment: Video Games",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "In Pokemon Diamond, Pearl and Platinum, where can a Munchlax be found?",
+      "correct_answer": "Honey Trees",
+      "incorrect_answers": [
+        "Trading with an NPC",
+        "Grass on Route 209",
+        "Wayward Cave"
+      ]
+    }
+  ]
+}
