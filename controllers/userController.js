@@ -81,7 +81,7 @@ exports.login = async function (username, password) {
 
     if (passwordsMatch) {
         // console.log('Successful login for ' + username);
-        // console.log(user);
+        console.log(user);
 
         return new Result(STATUS_CODES.success, 'Valid Login.', user);
     } else {

@@ -3,3 +3,13 @@ extends layout
 block content
     h1 Play Time 4 Trivia!
     button Go
+    h2 questions
+    each val in questions
+        div 
+            h6= val.question
+            div
+                p Correct Question :
+                p= val.correct_answer
+            p= val.incorrect_answers
+            each ques in val.incorrect_answers
+                p= ques

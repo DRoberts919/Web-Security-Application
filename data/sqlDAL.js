@@ -21,7 +21,7 @@ exports.getAllUsers = async function () {
     const con = await mysql.createConnection(sqlConfig);
 
     try {
-        let sql = `select * from Users;`;
+        let sql = `select * from users;`;
 
         const [userResults, ] = await con.query(sql);
 
