@@ -2,6 +2,7 @@
 const User = require('../models/user').User;
 const Result = require('../models/result').Result;
 const STATUS_CODES = require('../models/statusCodes').STATUS_CODES;
+require("dotenv").config();
 
 const mysql = require('mysql2/promise');
 const sqlConfig = {
