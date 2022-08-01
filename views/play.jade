@@ -9,7 +9,7 @@ block content
                 input(type="hidden" name='correct_answer' value=val.correctAnswer )
                 each ques in val.answers
                     label
-                        input(type="radio", name=`question${index}`, value=ques)
+                        input(type="radio", name=`${index}`, value=ques)
                         | #{ques}
             br
         button(type="submit" placeholder="Finished") Finished
