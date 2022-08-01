@@ -25,7 +25,6 @@ router.post("/gameFinished", function (req, res, next) {
     }
   }
 
-
   //loop through questions to check which ones are right
   for (let i = 0; i < answers.correct_answer.length; i++) {
     if (answers.correct_answer[i] == answersArr[i]) {
