@@ -1,28 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const leaderBoardController = require("../controllers/leaderBoardController");
 
-router.get("/",  function (req, res, next) {
-  
-
+router.get("/", function (req, res, next) {
   res.render("index", { title: "Time 4 Trivia", user: req.session.user });
 });
 
-router.get("/leaderboard", function (req, res, next) {
-  // TODO: Get actual leader data from the MONGO database!
-  let leaders = [
-    {
-      name: "Sue",
-      score: 100,
-    },
-    {
-      name: "Don",
-      score: 99,
-    },
-    {
-      name: "Ralph",
-      score: 3,
-    },
-  ];
+router.get("/leaderboard", async function (req, res, next) {
+  let leaders = await leaderBoardController.getLeaderBoard();
+  console.log(leaders);
 
   res.render("leaderboard", {
     title: "Time 4 Trivia",

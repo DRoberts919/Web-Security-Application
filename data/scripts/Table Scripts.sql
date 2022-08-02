@@ -31,3 +31,10 @@ create table if not exists UserRoles(
     foreign key (UserId) references Users(UserId),
     foreign key (RoleId) references Roles(RoleId)
 );
+
+create table if not exists LeaderBoard(
+	ScoreId int NOT NULL AUTO_INCREMENT,
+	Username varchar(100) NOT NULL,
+	Score int NOT NULL,
+	PRIMARY KEY (ScoreId)
+);

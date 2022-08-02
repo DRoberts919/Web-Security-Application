@@ -2,17 +2,14 @@ extends layout
 
 block content
     h1 Play Time 4 Trivia!
-    
-    each val in questions
-        div 
-            h4= val.question
-            div
-                p Correct Question :
-                p= val.correct_answer
-            each ques in val.incorrect_answers
-                p= ques
-        br
-        br
-    
-    
-    button Finished
+    form(action="/g/gameFinished" method="POST")
+        each val,index in questions
+            div 
+                h4= val.question
+                input(type="hidden" name='correct_answer' value=val.correctAnswer )
+                each ques in val.answers
+                    label
+                        input(type="radio", name=`${index}`, value=ques)
+                        | #{ques}
+            br
+        button(type="submit" placeholder="Finished") Finished
