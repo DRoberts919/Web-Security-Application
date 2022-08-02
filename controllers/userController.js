@@ -106,3 +106,15 @@ exports.getUserById = function (userId) {
 exports.deleteUserById = function (userId) {
     return sqlDAL.deleteUserById(userId);
 }
+
+/**
+ * 
+ * @param {*} userId 
+ * @returns updates the user matching the userId
+ */
+ exports.updateUserRoleById = function (userId, roleId) {
+    //TODO: Create logic here for detecting if already an admin account (cannot demote themselves)
+    
+    console.log('user tried to be updated')
+    return sqlDAL.updateUserRoleById(userId, roleId);
+}

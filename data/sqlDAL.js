@@ -287,3 +287,31 @@ exports.updateUserPassword = async function (userId, hashedPassword) {
         return result;
     }
 }
+
+/**
+ * 
+ * @param {*} userId 
+ * @param {*} role
+ * @returns a user with an updated role
+ */
+ exports.updateUserRoleById = async function (userId, roleId) {
+    let result = new Result();
+
+    const con = await mysql.createConnection(sqlConfig);
+
+    try {
+        // let sql = `update Users set role = '${role}' where userId = '${userId}'`;
+
+        let sql = `update Users A, userroles B set B.RoleId = ${roleId} where A.UserId = ${userId} AND A.UserId = B.UserId;`;
+        await con.query(sql);
+
+        result.status = STATUS_CODES.success;
+        result.message = 'Updated Role';
+        return result;
+    } catch (err) {
+        console.log(err);
+        result.status = STATUS_CODES.failure;
+        result.message = err.message;
+        return result;
+    }
+}

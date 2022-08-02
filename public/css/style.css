@@ -35,3 +35,9 @@ nav a {
   width: 250px;
   margin-top: 10px;
 }
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  color: rgb(140, 149, 151);
+}

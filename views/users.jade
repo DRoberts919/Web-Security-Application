@@ -1,13 +1,32 @@
 extends layout
-
 block content
   form(action='post')
     h1 Users
+    div
+      - console.log(users)
+    div
+    div
+      - console.log(currentUser)
+    div
     each user in users 
-      div(class='userBox')
-        h2 Username: #{user.username}
-          h3 Roles
-          ul
-            each role in user.roles 
-              li= role
+      if (user.length === 0 )
+        p
+          | No Users To Display
+      else
+        div(class='userBox')
+          h2 Username: #{user.username}
+            h3 Roles
+            ul
+              each role in user.roles 
+                li= role
+          //- a(href='/enableUser/' + user.id) Enable Account
+          //- a(href='/diableUser/' + user.id) Disable Account
+          //- button(type='button' onclick=`updateUserByRoleId(${user.id})`) Promote
+          if (currentUser.userId === user.userId)
+            a(href='/a/users/user' class='disabled') Profile
+          else
+            a(href='/a/users/profile/' + user.userId) Profile
+          //- a(href='/diableUser/' + user.id) Demote
+          
+
             

@@ -1,0 +1,22 @@
+extends layout
+block content
+    h1 #{profile.username}'s Profile
+    if error != ''
+        label(class='error') #{error}
+    form(action='/a/users/profile/#{profile.userId}', method='post')
+        div Current Role: #{profile.roles}
+        br
+        label Update Role:
+        br
+        br
+        #[input(type='radio' name='role' value='1')] User
+        #[input(type='radio' name='role' value='2')] Admin
+        br
+        br
+        br
+        input(type='button' value='Enable')
+        input(type='button' value='Disable')
+        br
+        br
+        br
+        input(type='submit' value='Submit')
