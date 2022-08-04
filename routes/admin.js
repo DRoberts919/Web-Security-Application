@@ -12,6 +12,7 @@ router.get('/users/:role', async function (req, res, next) {
     res.redirect('/');
   } else {
     let users = await userController.getUsers(role);
+    // let statuses = await userController.getUsersStatus();
 
     res.render('users', { title: 'Time 4 Trivia', currentUser: req.session.user, users: users });
   }
@@ -44,11 +45,12 @@ router.post('/users/profile/:userId', async function (req, res, next) {
   if (!req.session.user || !req.session.user.isAdmin) {
     res.redirect('/');
   } else {
-    let result = await userController.updateUserRoleById(req.params.userId, req.body.role);
-    console.log(result)
-    console.log(req.body.role)
+    let newRole = await userController.updateUserRoleById(req.params.userId, req.body.role);
+    let newStatus = await userController.updateUserStatus(req.params.userId, req.body.status);
+    console.log(newRole, newStatus)
+    // console.log(req.body.role)
 
-    if (result.status == STATUS_CODES.success) {
+    if (newRole.status == STATUS_CODES.success && newStatus.status == STATUS_CODES.success) {
       console.log('it was a success');
       res.redirect('/a/users/user');
     } else {
@@ -57,5 +59,15 @@ router.post('/users/profile/:userId', async function (req, res, next) {
     }
   }
 });
+
+// router.post('/users/profile/:status', async function (req, res, next) {
+//   let result = await userController.getUsersStatus(req.params.status);
+
+//   console.log(result)
+//   console.log('pressed')
+//   let profile = await userController.getUserById(req.params.userId);
+
+//   res.render('users', { title: 'Time 4 Trivia', currentUser: req.session.user});
+// })
 
 module.exports = router;

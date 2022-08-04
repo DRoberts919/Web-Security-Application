@@ -22,10 +22,10 @@ exports.getUsers = async function (role = 'user') {
  * @param {*} password 
  * @returns a Result with status/message and the new user id as data
  */
-exports.createUser = async function (username, email, password) {
+exports.createUser = async function (username, email, password, status) {
     let hashedPassword = await bcrypt.hash(password, 10);
 
-    let result = await sqlDAL.createUser(username, hashedPassword, email);
+    let result = await sqlDAL.createUser(username, hashedPassword, email, status);
 
     return result;
 }
@@ -82,8 +82,11 @@ exports.login = async function (username, password) {
     if (passwordsMatch) {
         // console.log('Successful login for ' + username);
         console.log(user);
-
-        return new Result(STATUS_CODES.success, 'Valid Login.', user);
+        if (user.status == 'disabled') {
+            return new Result(STATUS_CODES.failure, 'Disabled Account');
+        } else {
+            return new Result(STATUS_CODES.success, 'Valid Login.', user);
+        }
     } else {
         return new Result(STATUS_CODES.failure, 'Invalid Login.');
     }
@@ -109,12 +112,19 @@ exports.deleteUserById = function (userId) {
 
 /**
  * 
- * @param {*} userId 
- * @returns updates the user matching the userId
+ * @param {*} userId
+ * @param {*} roleId
+ * @returns updates the user's role matching the userId
  */
- exports.updateUserRoleById = function (userId, roleId) {
-    //TODO: Create logic here for detecting if already an admin account (cannot demote themselves)
-    
+exports.updateUserRoleById = function (userId, roleId) {
     console.log('user tried to be updated')
     return sqlDAL.updateUserRoleById(userId, roleId);
+}
+
+exports.updateUserStatus = function (userId, status) {
+    return sqlDAL.updateUserStatus(userId, status);
+}
+
+exports.getUsersStatus = function (status) {
+    return sqlDAL.getUsersStatus(status);
 }

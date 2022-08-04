@@ -86,7 +86,7 @@ exports.getUsersByRole = async function (role) {
         let role = roleResults[key];
         roles.push(role.Role);
       }
-      users.push(new User(u.UserId, u.Username, u.Email, u.Password, roles));
+      users.push(new User(u.UserId, u.Username, u.Email, u.Password, roles, u.Status));
     }
   } catch (err) {
     console.log(err);
@@ -123,7 +123,7 @@ exports.getUserById = async function (userId) {
         let role = roleResults[key];
         roles.push(role.Role);
       }
-      user = new User(u.UserId, u.Username, u.Email, u.Password, roles);
+      user = new User(u.UserId, u.Username, u.Email, u.Password, roles, u.Status);
     }
   } catch (err) {
     console.log(err);
@@ -188,7 +188,7 @@ exports.getUserByUsername = async function (username) {
         let role = roleResults[key];
         roles.push(role.Role);
       }
-      user = new User(u.UserId, u.Username, u.Email, u.Password, roles);
+      user = new User(u.UserId, u.Username, u.Email, u.Password, roles, u.Status);
     }
   } catch (err) {
     console.log(err);
@@ -232,13 +232,13 @@ exports.getRolesByUserId = async function (userId) {
  * @param {*} email
  * @returns a result object with status/message
  */
-exports.createUser = async function (username, hashedPassword, email) {
+exports.createUser = async function (username, hashedPassword, email, status) {
   let result = new Result();
 
   const con = await mysql.createConnection(sqlConfig);
 
   try {
-    let sql = `insert into Users (Username, Email, Password) values ('${username}', '${email}', '${hashedPassword}')`;
+    let sql = `insert into Users (Username, Email, Password, Status) values ('${username}', '${email}', '${hashedPassword}', '${status}')`;
     const userResult = await con.query(sql);
 
     let newUserId = userResult[0].insertId;
@@ -349,24 +349,48 @@ exports.getTopScores = async function () {
  * @param {*} role
  * @returns a user with an updated role
  */
- exports.updateUserRoleById = async function (userId, roleId) {
-    let result = new Result();
+exports.updateUserRoleById = async function (userId, roleId) {
+  let result = new Result();
 
-    const con = await mysql.createConnection(sqlConfig);
+  const con = await mysql.createConnection(sqlConfig);
 
-    try {
-        // let sql = `update Users set role = '${role}' where userId = '${userId}'`;
+  try {
+    let sql = `update Users A, userroles B set B.RoleId = ${roleId} where A.UserId = ${userId} AND A.UserId = B.UserId;`;
+    await con.query(sql);
 
-        let sql = `update Users A, userroles B set B.RoleId = ${roleId} where A.UserId = ${userId} AND A.UserId = B.UserId;`;
-        await con.query(sql);
+    result.status = STATUS_CODES.success;
+    result.message = 'Updated Role';
+    return result;
+  } catch (err) {
+    console.log(err);
+    result.status = STATUS_CODES.failure;
+    result.message = err.message;
+    return result;
+  }
+}
 
-        result.status = STATUS_CODES.success;
-        result.message = 'Updated Role';
-        return result;
-    } catch (err) {
-        console.log(err);
-        result.status = STATUS_CODES.failure;
-        result.message = err.message;
-        return result;
-    }
+/**
+ * 
+ * @param {*} userId 
+ * @param {*} status
+ * @returns an updated status of a user
+ */
+ exports.updateUserStatus = async function (userId, status) {
+  let result = new Result();
+
+  const con = await mysql.createConnection(sqlConfig);
+
+  try {
+    let sql = `update Users U SET Status = '${status}' where U.UserId = ${userId};`;
+    await con.query(sql);
+
+    result.status = STATUS_CODES.success;
+    result.message = 'Updated Role';
+    return result;
+  } catch (err) {
+    console.log(err);
+    result.status = STATUS_CODES.failure;
+    result.message = err.message;
+    return result;
+  }
 }

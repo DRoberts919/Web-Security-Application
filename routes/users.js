@@ -12,8 +12,9 @@ router.post('/register', async function (req, res, next) {
   let username = req.body.username;
   let email = req.body.email;
   let password = req.body.password;
+  let status = String('enabled');
 
-  let result = await userController.createUser(username, email, password);
+  let result = await userController.createUser(username, email, password, status);
 
   if (result?.status == STATUS_CODES.success) {
     res.redirect('/u/login');

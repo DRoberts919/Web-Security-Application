@@ -41,3 +41,7 @@ nav a {
   cursor: default;
   color: rgb(140, 149, 151);
 }
+
+.current {
+  font-weight: 700;
+}

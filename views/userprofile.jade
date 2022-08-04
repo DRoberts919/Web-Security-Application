@@ -1,22 +1,37 @@
 extends layout
 block content
     h1 #{profile.username}'s Profile
-    if error != ''
-        label(class='error') #{error}
     form(action='/a/users/profile/#{profile.userId}', method='post')
-        div Current Role: #{profile.roles}
+        div Current Role: #{profile.roles} 
+        div Current Status: #{profile.status}
         br
         label Update Role:
         br
         br
-        #[input(type='radio' name='role' value='1')] User
-        #[input(type='radio' name='role' value='2')] Admin
+        if (profile.roles == 'user')
+            span(class='current')
+                |#[input(type='radio' name='role' value='1' checked)] User
+            |#[input(type='radio' name='role' value='2' required)] Admin
+        else
+            |#[input(type='radio' name='role' value='1' required)] User
+            span(class='current')
+                |#[input(type='radio' name='role' value='2' checked)] Admin
         br
         br
+        label Update Status:
         br
-        input(type='button' value='Enable')
-        input(type='button' value='Disable')
+        br
+        if (profile.status == 'enabled')
+            span(class='current')
+                |#[input(type='radio' name='status' value='enabled' checked)] Enable
+            |#[input(type='radio' name='status' value='disabled' required)] Disable
+        else
+            |#[input(type='radio' name='status' value='enabled' required)] Enable
+            span(class='current')
+                |#[input(type='radio' name='status' value='disabled' checked)] Disable
         br
         br
         br
         input(type='submit' value='Submit')
+    if error != ''
+    label(class='error') #{error}
