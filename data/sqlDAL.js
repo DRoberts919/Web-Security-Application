@@ -74,7 +74,7 @@ exports.getUsersByRole = async function (role) {
     for (key in userResults) {
       let u = userResults[key];
 
-      let sql = `select UserId, Role from UserRoles ur join Roles r on ur.roleid = r.roleid where ur.UserId = ${u.UserId}`;
+      let sql = `select UserId, Role from UserRoles ur join Roles r on ur.roleid = r.roleid where ur.UserId = ${u.UserId};`;
       console.log(sql);
       const [roleResults] = await con.query(sql);
 
@@ -114,7 +114,7 @@ exports.getUserById = async function (userId) {
     for (key in userResults) {
       let u = userResults[key];
 
-      let sql = `select UserId, Role from UserRoles ur join Roles r on ur.roleid = r.roleid where ur.UserId = ${u.UserId}`;
+      let sql = `select UserId, Role from UserRoles ur join Roles r on ur.roleid = r.roleid where ur.UserId = ${u.UserId};`;
       console.log(sql);
       const [roleResults] = await con.query(sql);
 
@@ -179,7 +179,7 @@ exports.getUserByUsername = async function (username) {
     for (key in userResults) {
       let u = userResults[key];
 
-      let sql = `select UserId, Role from UserRoles ur join Roles r on ur.roleid = r.roleid where ur.UserId = ${u.UserId}`;
+      let sql = `select UserId, Role from UserRoles ur join Roles r on ur.roleid = r.roleid where ur.UserId = ${u.UserId};`;
       console.log(sql);
       const [roleResults] = await con.query(sql);
 
@@ -209,7 +209,7 @@ exports.getRolesByUserId = async function (userId) {
   const con = await mysql.createConnection(sqlConfig);
 
   try {
-    let sql = `select UserId, Role from UserRoles ur join Roles r on ur.roleid = r.roleid where UserId = ${userId}`;
+    let sql = `select UserId, Role from UserRoles ur join Roles r on ur.roleid = r.roleid where UserId = ${userId};`;
 
     const [results] = await con.query(sql);
 
@@ -238,12 +238,12 @@ exports.createUser = async function (username, hashedPassword, email) {
   const con = await mysql.createConnection(sqlConfig);
 
   try {
-    let sql = `insert into Users (Username, Email, Password) values ('${username}', '${email}', '${hashedPassword}')`;
+    let sql = `insert into Users (Username, Email, Password) values ('${username}', '${email}', '${hashedPassword}');`;
     const userResult = await con.query(sql);
 
     let newUserId = userResult[0].insertId;
 
-    sql = `insert into UserRoles (UserId, RoleId) values (${newUserId}, 1)`;
+    sql = `insert into UserRoles (UserId, RoleId) values (${newUserId}, 1);`;
     await con.query(sql);
 
     result.status = STATUS_CODES.success;

@@ -1,71 +1,123 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const userController = require('../controllers/userController');
-const STATUS_CODES = require('../models/statusCodes').STATUS_CODES;
+const userController = require("../controllers/userController");
+const STATUS_CODES = require("../models/statusCodes").STATUS_CODES;
 
-router.get('/register', function (req, res, next) {
-  res.render('register', { title: 'Time 4 Trivia', error: '' });
+const stringCheck = (text) => {
+  const list = ["--", ";", '"', "<script>", "</script>", "UNION", "SELECT"];
+  let word = text;
+
+  for (let i = 0; i < list.length; i++) {
+    if (word.includes(list[i])) {
+      word = word.replace(list[i], "");
+    }
+  }
+  return word;
+};
+
+router.get("/register", function (req, res, next) {
+  res.render("register", { title: "Time 4 Trivia", error: "" });
 });
 
-router.post('/register', async function (req, res, next) {
+router.post("/register", async function (req, res, next) {
   let username = req.body.username;
   let email = req.body.email;
   let password = req.body.password;
 
-  let result = await userController.createUser(username, email, password);
+  let username2 = stringCheck(username);
+  console.log(`email: ${email}`);
+  let email2 = stringCheck(email);
+  console.log(`email2: ${email2}`);
+  let password2 = stringCheck(password);
+
+  let result = await userController.createUser(username2, email2, password2);
 
   if (result?.status == STATUS_CODES.success) {
-    res.redirect('/u/login');
+    res.redirect("/u/login");
   } else {
-    res.render('register', { title: 'Time 4 Trivia', error: 'Register Failed' });
+    res.render("register", {
+      title: "Time 4 Trivia",
+      error: "Register Failed",
+    });
   }
 });
 
-router.get('/login', function (req, res, next) {
-  res.render('login', { title: 'Time 4 Trivia', error: '' });
+router.get("/login", function (req, res, next) {
+  res.render("login", { title: "Time 4 Trivia", error: "" });
 });
 
-router.post('/login', async function (req, res, next) {
+router.post("/login", async function (req, res, next) {
   // Need to get the posted username and password
   let username = req.body.username;
   let password = req.body.password;
 
+  username = stringCheck(username);
+  password = stringCheck(password);
+
   let result = await userController.login(username, password);
 
   if (result?.status == STATUS_CODES.success) {
-    req.session.user = { userId: result.data.userId, username: result.data.username, isAdmin: result.data.roles.includes('admin') };
-    res.redirect('/');
+    req.session.user = {
+      userId: result.data.userId,
+      username: result.data.username,
+      isAdmin: result.data.roles.includes("admin"),
+    };
+    res.redirect("/");
   } else {
-    res.render('login', { title: 'Time 4 Trivia', error: 'Invalid Login. Please try again.' })
+    res.render("login", {
+      title: "Time 4 Trivia",
+      error: "Invalid Login. Please try again.",
+    });
   }
 });
 
-router.get('/logout', function (req, res, next) {
+router.get("/logout", function (req, res, next) {
   // Clear session information?!?
-  req.session.destroy((err) => { if (err) { console.log(err); } });
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
 
-  res.redirect('/');
+  res.redirect("/");
 });
 
-router.get('/profile', function (req, res, next) {
-  res.render('profile', { title: 'Time 4 Trivia', user: req.session.user, error: '' });
+router.get("/profile", function (req, res, next) {
+  res.render("profile", {
+    title: "Time 4 Trivia",
+    user: req.session.user,
+    error: "",
+  });
 });
 
-router.post('/profile', async function (req, res, next) {
+router.post("/profile", async function (req, res, next) {
   let current = req.body.currentPassword;
   let new1 = req.body.newPassword;
   let new2 = req.body.confirmPassword;
 
   if (new1 != new2) {
-    res.render('profile', { title: 'Time 4 Trivia', user: req.session.user, error: 'Password do not match' });
+    res.render("profile", {
+      title: "Time 4 Trivia",
+      user: req.session.user,
+      error: "Password do not match",
+    });
   } else {
     // console.log(`Changing passwor for userId ${req.session.user?.userId}`);
-    let result = await userController.updateUserPassword(req.session.user.userId, current, new1, new2);
+    let result = await userController.updateUserPassword(
+      req.session.user.userId,
+      current,
+      new1,
+      new2
+    );
     if (result.status == STATUS_CODES.success) {
-      res.redirect('/u/login');
+      res.redirect("/u/login");
     } else {
-      res.render('profile', { title: 'Time 4 Trivia', user: req.session.user, error: 'Password update failed' });
+      res.render("profile", {
+        title: "Time 4 Trivia",
+        user: req.session.user,
+        error: "Password update failed",
+      });
     }
   }
 });
