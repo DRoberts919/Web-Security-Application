@@ -28,7 +28,7 @@ exports.addTrivia = async (trivia) => {
   client.connect();
   try {
     if (trivia == undefined) {
-      return new Result(STATUS_CODES.failure, 'Current password is invalid');
+      return new Result(STATUS_CODES.failure, 'Trivia Format Invalid');
     } else {
       result = await collection.insertOne(trivia, (err, res) => {
         if(err) {

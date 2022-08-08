@@ -126,11 +126,11 @@ router.post("/profile", async function (req, res, next) {
   }
 });
 
-router.get('/add-new-trivia', async function (req, res, next) {
-  res.render('addTrivia', { title: 'Time 4 Trivia', user: req.session.user });
+router.get("/add-new-trivia", async function (req, res, next) {
+  res.render("addTrivia", { title: 'Time 4 Trivia', user: req.session.user });
 })
 
-router.post('/add-new-trivia', async function (req, res, next) {
+router.post("/add-new-trivia", async function (req, res, next) {
   let trivia = {
     question: req.body.question,
     correct_answer: req.body.correct,
@@ -139,11 +139,10 @@ router.post('/add-new-trivia', async function (req, res, next) {
   let result = await questionController.addTrivia(trivia);
 
   if (result?.status == STATUS_CODES.success) {
-    res.redirect('/');
+    res.redirect("/");
   } else {
-    console.log('error')
+    console.log("error")
   }
-  // console.log(result)
 })
 
 module.exports = router;
