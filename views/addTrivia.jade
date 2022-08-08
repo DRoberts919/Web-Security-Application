@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1 Add Trivia
+  form(action='/u/add-new-trivia', method='post')
+    label Trivia Question
+    br
+    |#[input(type='text' name='question')]
+    br
+    br
+    label Option 1 : Correct Answer
+    br
+    |#[input(type='text' name='correct')]
+    br
+    br
+    label Option 2 : Incorrect Answer
+    br
+    |#[input(type='text' name='incorrect')]
+    br
+    br
+    label Option 3 : Incorrect Answer
+    br
+    |#[input(type='text' name='incorrect')]
+    br
+    br
+    label Option 4 : Incorrect Answer
+    br
+    |#[input(type='text' name='incorrect')]
+    br
+    br
+    input(type='submit')

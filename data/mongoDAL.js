@@ -1,5 +1,8 @@
 // mongoDAL is responsible to for all interactions with mongodb for the trivia game
+const e = require("express");
 const { MongoClient } = require("mongodb");
+const Result = require('../models/result').Result;
+const STATUS_CODES = require('../models/statusCodes').STATUS_CODES;
 
 const URL = "mongodb://localhost:27017";
 const client = new MongoClient(URL);
@@ -19,3 +22,25 @@ exports.getAllQuestions = async () => {
   client.close();
   return result;
 };
+
+exports.addTrivia = async (trivia) => {
+  let result;
+  client.connect();
+  try {
+    if (trivia == undefined) {
+      return new Result(STATUS_CODES.failure, 'Current password is invalid');
+    } else {
+      result = await collection.insertOne(trivia, (err, res) => {
+        if(err) {
+          console.log(err);
+          throw err;
+        }
+        client.close();
+      });
+      return new Result(STATUS_CODES.success, 'Valid Trivia Object', trivia)
+    }
+  } catch (err) {
+    console.log(err);
+    return result;
+  }
+}
