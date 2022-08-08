@@ -1,17 +1,18 @@
 extends layout
 
 block content
+    
     h1 Register
     if error != ''
         label(class='error') #{error}
-    form(action='/u/register', method='post')
+    form(action='/u/register', method='post', id='registerForm')
         label Username:
-        input(type='text', name='username')
+        input(type='text', name='username', id='username')
         br
         label Email:
-        input(type='text', name='email')
+        input(type='text', name='email', id='registerEmail',pattern='/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/')
         br
         label Password:
         input(type='password', name='password')
         br
-        input(type='submit', value='register')
+        input( value='register' onclick='validateForm()')
