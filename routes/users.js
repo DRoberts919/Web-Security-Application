@@ -24,6 +24,8 @@ router.post("/register", async function (req, res, next) {
   let username = req.body.username;
   let email = req.body.email;
   let password = req.body.password;
+  let status = String('enabled');
+
 
   let username2 = stringCheck(username);
   console.log(`email: ${email}`);
@@ -32,6 +34,7 @@ router.post("/register", async function (req, res, next) {
   let password2 = stringCheck(password);
 
   let result = await userController.createUser(username2, email2, password2);
+
 
   if (result?.status == STATUS_CODES.success) {
     res.redirect("/u/login");
