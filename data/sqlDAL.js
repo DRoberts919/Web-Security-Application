@@ -6,11 +6,11 @@ require("dotenv").config();
 
 const mysql = require("mysql2/promise");
 const sqlConfig = {
-  host: "localhost",
-  user: "root",
+  host: process.env.SQL_HOST,
+  user: process.env.SQL_USER,
   password: process.env.SQL_DAL_PASSWORD,
-  database: "time4trivia",
-  multipleStatements: true,
+  database: process.env.SQL_DATABSE,
+  multipleStatements: false,
 };
 
 /**

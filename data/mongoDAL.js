@@ -3,11 +3,13 @@ const e = require("express");
 const { MongoClient } = require("mongodb");
 const Result = require('../models/result').Result;
 const STATUS_CODES = require('../models/statusCodes').STATUS_CODES;
+require("dotenv").config();
 
-const URL = "mongodb://localhost:27017";
+
+const URL = process.env.MONG_URL;
 const client = new MongoClient(URL);
 
-const dbName = "Web-Security-Questions";
+const dbName = process.env.MONG_DBNAME;
 const db = client.db(dbName);
 const collection = db.collection("Questions");
 
