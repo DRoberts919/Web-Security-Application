@@ -9,11 +9,12 @@ html
       a(class='active', href='/') Home
       a(class='active', href='/leaderboard') Leaderboard
       if user
+        a(class='', href='/u/add-new-trivia') Add Trivia
         if user.isAdmin
           a(class='', href='/a/users/user') Users
+          a(class='', href='/a/pending-trivia') Pending Trivia
         a(class='active', href='/g/play') Play
         a(class='', href='/u/profile') Profile
-        a(class='', href='/u/add-new-trivia') Add Trivia
         a(class='', href='/u/logout') Logout #{user.username}
       else
         a(class='', href='/u/login') Login

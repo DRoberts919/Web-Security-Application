@@ -129,7 +129,11 @@ router.post("/profile", async function (req, res, next) {
 });
 
 router.get("/add-new-trivia", async function (req, res, next) {
-  res.render("addTrivia", { title: 'Time 4 Trivia', user: req.session.user });
+  if (!req.session.user) {
+    res.redirect("/");
+  } else {
+    res.render("addTrivia", { user: req.session.user });
+  }
 })
 
 router.post("/add-new-trivia", async function (req, res, next) {
