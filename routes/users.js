@@ -5,6 +5,10 @@ const userController = require('../controllers/userController');
 const questionController = require('../controllers/questionController');
 const STATUS_CODES = require('../models/statusCodes').STATUS_CODES;
 
+const scriptRemoval =(script)=>{
+
+}
+
 const stringCheck = (text) => {
   const list = ["--", ";", '"', "<script>", "</script>", "UNION", "SELECT"];
   let word = text;
@@ -29,9 +33,7 @@ router.post("/register", async function (req, res, next) {
 
 
   let username2 = stringCheck(username);
-  console.log(`email: ${email}`);
   let email2 = stringCheck(email);
-  console.log(`email2: ${email2}`);
   let password2 = stringCheck(password);
 
   let result = await userController.createUser(username2, email2, password2);
@@ -56,10 +58,10 @@ router.post("/login", async function (req, res, next) {
   let username = req.body.username;
   let password = req.body.password;
 
-  username = stringCheck(username);
-  password = stringCheck(password);
+  let usernameTwo = stringCheck(username);
+  let passwordTwo = stringCheck(password);
 
-  let result = await userController.login(username, password);
+  let result = await userController.login(usernameTwo, passwordTwo);
 
   if (result?.status == STATUS_CODES.success) {
     req.session.user = {
