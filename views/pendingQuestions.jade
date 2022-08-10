@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    h1 Pending Trivia
+    form(action="/a/pending-trivia" method="POST")
+          div
+                table
+                    thead
+                        tr
+                            th Question
+                            th Correct
+                            th Incorrect
+                            th Approve
+                            th Deny
+                    tbody
+                    each trivia in questions
+                        tr
+                            td #{trivia.question}
+                            td #{trivia.correct_answer}
+                            each incorrect in trivia.incorrect_answers
+                                td #{incorrect}
+                            td #[input(type="submit" name="approve" value="✓")]
+                            td #[input(type="submit" name="deny" value="✖")]

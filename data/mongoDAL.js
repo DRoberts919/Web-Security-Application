@@ -9,13 +9,14 @@ const client = new MongoClient(URL);
 
 const dbName = "Web-Security-Questions";
 const db = client.db(dbName);
-const collection = db.collection("Questions");
+const pendingCollection = db.collection("PendingQuestions");
 
-exports.getAllQuestions = async () => {
+exports.getAllQuestions = async (collection) => {
   let result;
+  const questions = db.collection(`${collection}`);
   client.connect();
   try {
-    result = await collection.find({}).toArray();
+    result = await questions.find({}).toArray();
   } catch (err) {
     console.log(err);
   }
@@ -30,7 +31,7 @@ exports.addTrivia = async (trivia) => {
     if (trivia == undefined) {
       return new Result(STATUS_CODES.failure, 'Trivia Format Invalid');
     } else {
-      result = await collection.insertOne(trivia, (err, res) => {
+      result = await pendingCollection.insertOne(trivia, (err, res) => {
         if(err) {
           console.log(err);
           throw err;
@@ -43,4 +44,8 @@ exports.addTrivia = async (trivia) => {
     console.log(err);
     return result;
   }
+}
+
+exports.denyTrivia = async (trivia) => {
+  console.log('denied');
 }

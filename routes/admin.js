@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const userController = require('../controllers/userController');
+const questionController = require('../controllers/questionController');
 const STATUS_CODES = require('../models/statusCodes').STATUS_CODES;
 
 // All Admin Routes should only be accessble to logged in Admins!
@@ -15,6 +16,32 @@ router.get('/users/:role', async function (req, res, next) {
     // let statuses = await userController.getUsersStatus();
 
     res.render('users', { title: 'Time 4 Trivia', currentUser: req.session.user, users: users });
+  }
+});
+
+router.get('/pending-trivia', async function (req, res, next) {
+  if (!req.session.user || !req.session.user.isAdmin) {
+    res.redirect('/');
+  } else {
+    let results = await questionController.getAllQuestions('PendingQuestions', false);
+    console.log(results);
+    res.render("pendingQuestions", { user: req.session.user, questions: results });
+  }
+})
+
+router.post('/pending-trivia', async function (req, res, next) {
+  if (!req.session.user || !req.session.user.isAdmin) {
+    res.redirect('/');
+  } else {
+    if (req.body.approve) {
+      let results = await questionController.addTrivia('');
+      res.redirect('/a/pending-trivia');
+    } else if (req.body.deny) {
+      let results = await questionController.addTrivia('');
+      res.redirect('/a/pending-trivia');
+    } else {
+      console.log('error');
+    }
   }
 });
 
@@ -59,15 +86,5 @@ router.post('/users/profile/:userId', async function (req, res, next) {
     }
   }
 });
-
-// router.post('/users/profile/:status', async function (req, res, next) {
-//   let result = await userController.getUsersStatus(req.params.status);
-
-//   console.log(result)
-//   console.log('pressed')
-//   let profile = await userController.getUserById(req.params.userId);
-
-//   res.render('users', { title: 'Time 4 Trivia', currentUser: req.session.user});
-// })
 
 module.exports = router;

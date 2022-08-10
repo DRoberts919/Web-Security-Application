@@ -1,9 +1,15 @@
 const mongoDAL = require("../data/mongoDAL");
 
-exports.getAllQuestions = async () => {
-  let results = await mongoDAL.getAllQuestions();
+exports.getAllQuestions = async (collection, randomize) => {
+  let results = await mongoDAL.getAllQuestions(collection);
   let questions = formatQuestion(results);
- 
+
+  if (randomize == false) {
+    let questions = await mongoDAL.getAllQuestions(collection);
+
+    return questions;
+  }
+
   return questions;
 };
 
@@ -42,6 +48,10 @@ const randomQuestions = (incorrectAnswers, correctAnswer) => {
   return answers;
 };
 
-exports.addTrivia = function (trivia) {
+exports.addTrivia = (trivia) => {
   return mongoDAL.addTrivia(trivia);
+}
+
+exports.denyTrivia = (trivia) => {
+  return mongoDAL.denyTrivia(trivia);
 }
