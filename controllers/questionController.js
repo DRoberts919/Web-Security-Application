@@ -41,3 +41,7 @@ const randomQuestions = (incorrectAnswers, correctAnswer) => {
 
   return answers;
 };
+
+exports.addTrivia = function (trivia) {
+  return mongoDAL.addTrivia(trivia);
+}

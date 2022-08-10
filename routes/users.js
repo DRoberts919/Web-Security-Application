@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const userController = require("../controllers/userController");
-const STATUS_CODES = require("../models/statusCodes").STATUS_CODES;
+const userController = require('../controllers/userController');
+const questionController = require('../controllers/questionController');
+const STATUS_CODES = require('../models/statusCodes').STATUS_CODES;
 
 const scriptRemoval =(script)=>{
 
@@ -126,5 +127,24 @@ router.post("/profile", async function (req, res, next) {
     }
   }
 });
+
+router.get("/add-new-trivia", async function (req, res, next) {
+  res.render("addTrivia", { title: 'Time 4 Trivia', user: req.session.user });
+})
+
+router.post("/add-new-trivia", async function (req, res, next) {
+  let trivia = {
+    question: req.body.question,
+    correct_answer: req.body.correct,
+    incorrect_answers: req.body.incorrect
+  }
+  let result = await questionController.addTrivia(trivia);
+
+  if (result?.status == STATUS_CODES.success) {
+    res.redirect("/");
+  } else {
+    console.log("error")
+  }
+})
 
 module.exports = router;
