@@ -5,11 +5,11 @@ const Result = require('../models/result').Result;
 const STATUS_CODES = require('../models/statusCodes').STATUS_CODES;
 require("dotenv").config();
 
-
-const URL = process.env.MONG_URL;
+const URL = process.env.MONGO_URL;
+//const URL = "mongodb://localhost:27017";
 const client = new MongoClient(URL);
 
-const dbName = process.env.MONG_DBNAME;
+const dbName = process.env.MONGO_DBNAME;
 const db = client.db(dbName);
 const pendingCollection = db.collection("PendingQuestions");
 

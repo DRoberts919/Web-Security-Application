@@ -5,7 +5,7 @@ const leaderBoardController = require("../controllers/leaderBoardController");
 
 router.get("/play", async function (req, res, next) {
   // TODO: Implement Game
-  let results = await questionController.getAllQuestions("Questions");
+  let results = await questionController.getAllQuestions("Questions",true);
 
   res.render("play", { user: req.session.user, questions: results });
 });
