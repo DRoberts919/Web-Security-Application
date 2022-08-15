@@ -2,22 +2,21 @@ extends layout
 
 block content
     h1 Pending Trivia
-    form(action="/a/pending-trivia" method="POST")
           div
-                table
-                    thead
-                        tr
-                            th Question
-                            th Correct
-                            th Incorrect
-                            th Approve
-                            th Deny
-                    tbody
-                    each trivia in questions
+            table
+                thead
+                    tr
+                        th Question
+                        th Correct
+                        th Incorrect
+                tbody
+                each trivia,index in questions
+                    form(action="/a/pending-trivia" method="POST")
                         tr
                             td #{trivia.question}
                             td #{trivia.correct_answer}
                             each incorrect in trivia.incorrect_answers
                                 td #{incorrect}
+                            #[input(type="hidden" name="_id" value=`${trivia._id}`)]
                             td #[input(type="submit" name="approve" value="✓")]
                             td #[input(type="submit" name="deny" value="✖")]

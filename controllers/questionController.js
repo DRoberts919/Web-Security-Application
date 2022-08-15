@@ -13,6 +13,18 @@ exports.getAllQuestions = async (collection, randomize) => {
   return questions;
 };
 
+exports.getOneQuestion = async (collection, id) => {
+  let question = await mongoDAL.getOneQuestion(collection, id);
+
+  return question;
+}
+
+exports.updateApprovalOfQuestion = async (triviaObj) => {
+  let question = await mongoDAL.updateApprovalOfQuestion(triviaObj);
+
+  return question;
+}
+
 const formatQuestion = (questions) => {
   let qArray = [];
 
@@ -50,8 +62,4 @@ const randomQuestions = (incorrectAnswers, correctAnswer) => {
 
 exports.addTrivia = (trivia) => {
   return mongoDAL.addTrivia(trivia);
-}
-
-exports.denyTrivia = (trivia) => {
-  return mongoDAL.denyTrivia(trivia);
 }

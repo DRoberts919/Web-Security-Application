@@ -34,10 +34,30 @@ router.post('/pending-trivia', async function (req, res, next) {
     res.redirect('/');
   } else {
     if (req.body.approve) {
-      let results = await questionController.addTrivia('');
+      let triviaObjectBSON = await questionController.getOneQuestion('PendingQuestions', req.body._id);
+      let triviaObjectString = JSON.stringify(triviaObjectBSON[0]);
+      let triviaObject = JSON.parse(triviaObjectString);
+
+      let addApproveProp = {
+        approval: "approved"
+      }
+
+      Object.assign(triviaObject, addApproveProp);
+
+      await questionController.updateApprovalOfQuestion(triviaObject);
       res.redirect('/a/pending-trivia');
     } else if (req.body.deny) {
-      let results = await questionController.addTrivia('');
+      let triviaObjectBSON = await questionController.getOneQuestion('PendingQuestions', req.body._id);
+      let triviaObjectString = JSON.stringify(triviaObjectBSON[0]);
+      let triviaObject = JSON.parse(triviaObjectString);
+
+      let addDenyProp = {
+        approval: "denied"
+      }
+
+      Object.assign(triviaObject, addDenyProp);
+
+      await questionController.updateApprovalOfQuestion(triviaObject);
       res.redirect('/a/pending-trivia');
     } else {
       console.log('error');
