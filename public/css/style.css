@@ -1,6 +1,7 @@
 body {
   padding: 50px;
   font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+  margin: 0 auto;
 }
 
 a {
@@ -53,4 +54,14 @@ table {
 
 th, td {
   border: 1px solid #000;
+}
+
+.btn{
+  margin-left: 4px;
+  margin-right: 4px;
+  padding: 2px 1px 2px 1px;
+  border: 1px solid #00B7FF;
+  border-radius:5px;
+
+  font-size:1.2rem;
 }

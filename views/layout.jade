@@ -6,16 +6,16 @@ html
     script(src="/js/security.js")
   body
     nav
-      a(class='active', href='/') Home
-      a(class='active', href='/leaderboard') Leaderboard
+      a(class='active btn', href='/') Home
+      a(class='active btn', href='/leaderboard') Leaderboard
       if user
-        a(class='', href='/u/add-new-trivia') Add Trivia
+        a(class='btn', href='/u/add-new-trivia') Add Trivia
         if user.isAdmin
-          a(class='', href='/a/users/user') Users
-          a(class='', href='/a/pending-trivia') Pending Trivia
-        a(class='active', href='/g/play') Play
-        a(class='', href='/u/profile') Profile
-        a(class='', href='/u/logout') Logout #{user.username}
+          a(class='btn', href='/a/users/user') Users
+          a(class='btn', href='/a/pending-trivia') Pending Trivia
+        a(class='active btn', href='/g/play') Play
+        a(class='btn', href='/u/profile') Profile
+        a(class='btn', href='/u/logout') Logout #{user.username}
       else
-        a(class='', href='/u/login') Login
+        a(class='btn', href='/u/login') Login
     block content
