@@ -9,11 +9,14 @@ router.get("/", function (req, res, next) {
 router.get("/leaderboard", async function (req, res, next) {
   let leaders = await leaderBoardController.getLeaderBoard();
   console.log(leaders);
+  let size = leaders.length
+  console.log(size)
 
   res.render("leaderboard", {
     title: "Time 4 Trivia",
     user: req.session.user,
     leaders: leaders,
+    size: size
   });
 });
 

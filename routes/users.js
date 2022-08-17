@@ -10,7 +10,7 @@ const scriptRemoval =(script)=>{
 }
 
 const stringCheck = (text) => {
-  const list = ["--", ";", '"', "<script>", "</script>", "UNION", "SELECT"];
+  const list = ["--", ";", '"', "<script>", "</script>", "UNION", "SELECT", "UPDATE", "DELETE", "WHERE","INSERT"];
   let word = text;
 
   for (let i = 0; i < list.length; i++) {
