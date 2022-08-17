@@ -98,9 +98,9 @@ router.get("/profile", function (req, res, next) {
 });
 
 router.post("/profile", async function (req, res, next) {
-  let current = req.body.currentPassword;
-  let new1 = req.body.newPassword;
-  let new2 = req.body.confirmPassword;
+  let current = stringCheck(req.body.currentPassword) ;
+  let new1 = stringCheck(req.body.newPassword);
+  let new2 = stringCheck(req.body.newPassword);
 
   if (new1 != new2) {
     res.render("profile", {
@@ -138,8 +138,8 @@ router.get("/add-new-trivia", async function (req, res, next) {
 
 router.post("/add-new-trivia", async function (req, res, next) {
   let trivia = {
-    question: req.body.question,
-    correct_answer: req.body.correct,
+    question: stringCheck(req.body.question) ,
+    correct_answer: stringCheck(req.body.correct),
     incorrect_answers: req.body.incorrect
   }
   let result = await questionController.addTrivia(trivia);
