@@ -8,9 +8,10 @@ drop table if exists Roles;
 
 create table if not exists Users(
 	UserId int NOT NULL AUTO_INCREMENT,
-	Username varchar(100) NOT NULL,
-	Password varchar(100) NOT NULL,
-	Email varchar(100) NOT NULL,
+	Username varchar(1000) NOT NULL,
+	Password varchar(1000) NOT NULL,
+	Email varchar(1000) NOT NULL,
+	Status varchar(100) NOT NULL,
 	PRIMARY KEY (UserId),
 	CONSTRAINT Users_UniqueEmail UNIQUE(Email),
 	CONSTRAINT Users_UniqueUsername UNIQUE(Username)

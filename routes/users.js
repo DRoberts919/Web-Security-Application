@@ -5,17 +5,23 @@ const userController = require('../controllers/userController');
 const questionController = require('../controllers/questionController');
 const STATUS_CODES = require('../models/statusCodes').STATUS_CODES;
 
+const listArray = require('../public/js/blacklist.js')
+
 const scriptRemoval =(script)=>{
 
 }
 
 const stringCheck = (text) => {
-  const list = ["--", ";", '"', "<script>", "</script>", "UNION", "SELECT", "UPDATE", "DELETE", "WHERE","INSERT"];
+  // const list = ["--", ";", '"', "<script>", "</script>", "UNION", "SELECT", "UPDATE", "DELETE", "WHERE","INSERT"];
+  const list = listArray.list;
+  console.log(list);
   let word = text;
 
   for (let i = 0; i < list.length; i++) {
     if (word.includes(list[i])) {
       word = word.replace(list[i], "");
+    }else{
+      continue;
     }
   }
   return word;
@@ -33,10 +39,11 @@ router.post("/register", async function (req, res, next) {
 
 
   let username2 = stringCheck(username);
+  console.log(username2)
   let email2 = stringCheck(email);
   let password2 = stringCheck(password);
 
-  let result = await userController.createUser(username2, email2, password2);
+  let result = await userController.createUser(username2, email2, password2,status);
 
 
   if (result?.status == STATUS_CODES.success) {
