@@ -1,26 +1,23 @@
 const express = require("express");
 const router = express.Router();
 
-const userController = require('../controllers/userController');
-const questionController = require('../controllers/questionController');
-const STATUS_CODES = require('../models/statusCodes').STATUS_CODES;
+const userController = require("../controllers/userController");
+const questionController = require("../controllers/questionController");
+const STATUS_CODES = require("../models/statusCodes").STATUS_CODES;
 
-const listArray = require('../public/js/blacklist.js')
+const listArray = require("../public/js/blacklist.js");
 
-const scriptRemoval =(script)=>{
-
-}
+const scriptRemoval = (script) => {};
 
 const stringCheck = (text) => {
   // const list = ["--", ";", '"', "<script>", "</script>", "UNION", "SELECT", "UPDATE", "DELETE", "WHERE","INSERT"];
   const list = listArray.list;
-  console.log(list);
   let word = text;
 
   for (let i = 0; i < list.length; i++) {
     if (word.includes(list[i])) {
       word = word.replace(list[i], "");
-    }else{
+    } else {
       continue;
     }
   }
@@ -35,16 +32,18 @@ router.post("/register", async function (req, res, next) {
   let username = req.body.username;
   let email = req.body.email;
   let password = req.body.password;
-  let status = String('enabled');
-
+  let status = String("enabled");
 
   let username2 = stringCheck(username);
-  console.log(username2)
   let email2 = stringCheck(email);
   let password2 = stringCheck(password);
 
-  let result = await userController.createUser(username2, email2, password2,status);
-
+  let result = await userController.createUser(
+    username2,
+    email2,
+    password2,
+    status
+  );
 
   if (result?.status == STATUS_CODES.success) {
     res.redirect("/u/login");
@@ -105,7 +104,7 @@ router.get("/profile", function (req, res, next) {
 });
 
 router.post("/profile", async function (req, res, next) {
-  let current = stringCheck(req.body.currentPassword) ;
+  let current = stringCheck(req.body.currentPassword);
   let new1 = stringCheck(req.body.newPassword);
   let new2 = stringCheck(req.body.newPassword);
 
@@ -141,21 +140,34 @@ router.get("/add-new-trivia", async function (req, res, next) {
   } else {
     res.render("addTrivia", { user: req.session.user });
   }
-})
+});
 
 router.post("/add-new-trivia", async function (req, res, next) {
+  let question = req.body.question;
+  let correct_answer = req.body.correct;
+  let incorrect_answer = req.body.incorrect;
+
+  let question2 = stringCheck(question);
+  let correct_answer2 = stringCheck(correct_answer);
+  let incorrect_answer2 = [];
+
+  incorrect_answer.forEach((question) => {
+    let newString = stringCheck(question);
+    incorrect_answer2.push(newString);
+  });
+
   let trivia = {
-    question: stringCheck(req.body.question) ,
-    correct_answer: stringCheck(req.body.correct),
-    incorrect_answers: req.body.incorrect
-  }
+    question: question2,
+    correct_answer: correct_answer2,
+    incorrect_answers: incorrect_answer2,
+  };
   let result = await questionController.addTrivia(trivia);
 
   if (result?.status == STATUS_CODES.success) {
     res.redirect("/");
   } else {
-    console.log("error")
+    console.log("error");
   }
-})
+});
 
 module.exports = router;
